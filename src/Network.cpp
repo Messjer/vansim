@@ -10,6 +10,7 @@
 #include <cmath>
 #include <iostream>
 #include <cassert>
+#define MIN_CAP 5.0
 
 using namespace std;
 
@@ -23,16 +24,10 @@ Network::Network(int n, int x, int y): N(n) {
     }
     // compute weights of edges
     for (int i = 0; i < n; i++)
-        for (int j = 0; j < n; j++)
-            a[i][j] = a[j][i] = hypot(abs(xx[i] - xx[j]), abs(yy[i] - yy[j]));
+        for (int j = 0; j < n; j++) {
+            // random road length
+            a[i][j] = a[j][i] = (0.5 + (double) rand() / (RAND_MAX)) * hypot(abs(xx[i] - xx[j]), abs(yy[i] - yy[j]));
+            c[i][j] = c[i][j] = max(MIN_CAP, K2 * a[i][j]);
+        }
 
-}
-
-Agent* Network::createAgent(double rho) {
-    Agent *agent;
-    if (((double) rand() / (RAND_MAX) < rho))
-        agent = new GossipAgent(this);
-    else
-        agent = new Agent(this);
-    return agent;
 }

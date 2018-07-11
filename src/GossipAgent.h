@@ -7,18 +7,19 @@
 #include "Network.h"
 
 class GossipAgent : public Agent {
-private:
+public:
     // local congestion table
-    bool cong[MAX_NODE][MAX_NODE];
+    int w[MAX_NODE][MAX_NODE];
     // record of timing
-    unsigned int t[MAX_NODE][MAX_NODE];
+    int t[MAX_NODE][MAX_NODE];
 
     int adj(int i, int j);
-public:
-    GossipAgent(Network * net): Agent(net) {
-        memset(cong, 0, sizeof(cong));
+
+    GossipAgent(Network * net, int time): Agent(net, time) {
+        memset(w, 0, sizeof(w));
         memset(t, 0, sizeof(t));
     }
+    int update(int time);
 };
 
 

@@ -7,26 +7,40 @@
 #include "GossipSession.h"
 #include <vector>
 #include "Network.h"
+#include <set>
 #include <iostream>
+#include <list>
 #define MAX_COM_TIME 100
 
-using namespace std;
+
+struct WorldConfig {
+    double p_com, p_reroute, p_gas, rho;
+    int n, x, y, T, duration, num_a;
+};
 
 class World {
 private:
-    vector<GossipSession> gossips[MAX_COM_TIME];
+    std::vector<GossipSession> gossips[MAX_COM_TIME];
+    std::list<Agent*> agents;
     Network *net;
-    int num_a, num;
-    int duration;
-    int time;
+    WorldConfig conf;
+    int cnt;
+    int num, time;
+
+    void reap(Agent *agn);
+    Agent* create();
+    double randReal() {
+        return (double) rand() / (RAND_MAX);
+    }
 public:
-    World() {};
-    void createSimualtion(int n, int x, int y, int duration, int Num_a);
+    World(const WorldConfig &config);
+    ~World();
+
     // a single step in simulation
     // return 0 on completion
     bool step();
+
     void printStats();
-    void clearSimulation();
 };
 
 

@@ -4,13 +4,15 @@
 
 #ifndef VANSIM_GOSSIPSESSION_H
 #define VANSIM_GOSSIPSESSION_H
-
+#include "GossipAgent.h"
 
 class GossipSession {
     // agent number
-    int a, b;
-    // time until completion
-    int t;
+    GossipAgent *a, *b;
+    int cur;
+public:
+    GossipSession(GossipAgent *A, GossipAgent *B, int Cur): a(A), b(B), cur(Cur) {}
+    void close();
 };
 
 
