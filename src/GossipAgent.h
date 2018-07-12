@@ -22,6 +22,8 @@ public:
 
     int update(int time);
 
+    void fetch_station(int time);
+
     std::pair<int, double> reap(int time);
 };
 

@@ -6,10 +6,6 @@
 #include <cstdlib>
 
 using namespace std;
-// fraction of time to releace agents
-const double FRAC = 0.1;
-
-using namespace std;
 
 World::World(const WorldConfig &config) {
     conf = config;
@@ -17,19 +13,20 @@ World::World(const WorldConfig &config) {
     ttl_gos = ttl_norm = 0;
     // assume agents arrival in the first 1/10 of simulation
     // average agent arrival in a step is num
-    num = max(1.0, conf.num_a / (FRAC * conf.duration));
+    num = max(1, conf.num_a);
+    //num = max(1.0, conf.num_a / (FRAC * conf.duration));
     time = 0;
     net = new Network(conf.n, conf.x, conf.y, conf.p_reroute, conf.p_gas);
 }
 
 bool World::step() {
-    if (time == conf.duration || (time > FRAC * conf.duration && agents.empty()))
+    if (time == conf.duration)
         return false;
 
     // add agents during the first 1 / 5 of the simulation
-    int to_add = min(num, conf.num_a);
-    conf.num_a -= to_add;
-    for (int i = 0; i < to_add; i++)
+    //int to_add = min(num, conf.num_a);
+    //conf.num_a -= to_add;
+    for (int i = 0; i < num; i++)
         create();
 
     // check completed gossips

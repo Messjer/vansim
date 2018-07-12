@@ -10,16 +10,16 @@
 #include <iostream>
 #include <cstdlib>
 
-#define MAX_NODE 10
+#define MAX_NODE 20
 #define RANDOM_REAL() ((double) rand() / (RAND_MAX))
 
 class Agent;
 class GossipAgent;
 
 // delay factor
-const double K = 100;
+extern double K;
 // capacity factor
-const double K2 = 0.1;
+extern double K2;
 
 class Network {
 public:
@@ -32,6 +32,7 @@ public:
     int w[MAX_NODE][MAX_NODE];
     int c[MAX_NODE][MAX_NODE];
     std::deque<GossipAgent *> agents[MAX_NODE][MAX_NODE];
+    bool is_station[MAX_NODE];
 
     double p_reroute, p_gas;
 

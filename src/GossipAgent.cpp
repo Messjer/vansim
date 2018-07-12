@@ -12,14 +12,32 @@ int GossipAgent::adj(int i, int j) {
     return net ->a[i][j] + K * w[i][j]/net->c[i][j];
 }
 
-int GossipAgent::update(int time) {
-    if (RANDOM_REAL() < net -> p_reroute)
-        plan();
+// update all information
+void GossipAgent::fetch_station(int time) {
+    for (int i = 0; i < net -> N; i++)
+        for (int j = 0; j < net -> N; j++) {
+            w[i][j] = net -> w[i][j];
+            t[i][j] = time;
+        }
+}
 
+int GossipAgent::update(int time) {
     // if ready to left queue, pop it out
     if (ttm == 1 && a != b) {
-        assert(net -> agents[a][b].front() == this);
-        net -> agents[a][b].pop_front();
+        if (net -> agents[a][b].front() == this)
+            net -> agents[a][b].pop_front();
+        else {
+            // not at the front, find its position
+            auto it = net -> agents[a][b].begin();
+            for (; it != net->agents[a][b].end() && *it != this; it++);
+            assert(*it == this);
+            net -> agents[a][b].erase(it);
+        }
+        if (net -> is_station[b])
+            fetch_station(time);
+
+        if (RANDOM_REAL() < net -> p_reroute)
+            plan();
     }
 
     int code = Agent::update(time);
