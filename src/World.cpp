@@ -105,6 +105,10 @@ void World::reap(Agent *agn) {
 
 World::~World() {
     printStats();
+    // clear all agents
+    for (auto it = agents.begin(); it != agents.end(); it++)
+        delete *it;
+    agents.clear();
     delete net;
 }
 
