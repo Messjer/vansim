@@ -10,7 +10,7 @@ for k in xrange(K + 1):
 	print("testing {}".format(k * p_gas))
 	for t in xrange(T):
 		seed = random.randrange(0, 1 << 32)
-		cmd = subprocess.Popen('./vansim 15 20 20 1 1000 5 1.0 {} 1.0 0.1 100 1 {}'.format(k * p_gas, seed), shell=True, stdout=subprocess.PIPE)
+		cmd = subprocess.Popen('./vansim 15 20 20 1 1000 20 1.0 {} 1.0 0.1 100 1 {}'.format(k * p_gas, seed), shell=True, stdout=subprocess.PIPE)
 		lines = cmd.stdout.readlines()
 		if (len(lines) == 1): #encounter error in vansim
 			continue
@@ -25,5 +25,5 @@ for k in xrange(K + 1):
 		#print("Gossiping is {0:.4f} better".format(impr))
 	stats_p.append(sum(stats_time) / len(stats_time))
 
-with open("stats2.txt", "w") as fd:
+with open("stats_NumA20.txt", "w") as fd:
 	fd.write(str(stats_p))
