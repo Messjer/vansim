@@ -5,6 +5,7 @@
 #ifndef VANSIM_GOSSIPSESSION_H
 #define VANSIM_GOSSIPSESSION_H
 #include "GossipAgent.h"
+#include <cstdio>
 
 class GossipSession {
     // agent number

@@ -8,6 +8,11 @@
 
 class GossipAgent : public Agent {
 public:
+    GossipAgent(Network * net, int time): Agent(net, time) {
+        memset(w, 0, sizeof(w));
+        memset(t, 0, sizeof(t));
+    }
+
     // local congestion table
     int w[MAX_NODE][MAX_NODE];
     // record of timing
@@ -15,11 +20,9 @@ public:
 
     int adj(int i, int j);
 
-    GossipAgent(Network * net, int time): Agent(net, time) {
-        memset(w, 0, sizeof(w));
-        memset(t, 0, sizeof(t));
-    }
     int update(int time);
+
+    std::pair<int, double> reap(int time);
 };
 
 

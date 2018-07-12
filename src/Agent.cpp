@@ -62,7 +62,7 @@ void Agent::plan() {
 }
 
 int Agent::update(int time) {
-    history.push_back(a);
+    //history.push_back(a);
     if (--ttm == 0) {
         if (a != b) {
             net -> w[a][b]--;
@@ -78,7 +78,6 @@ int Agent::update(int time) {
             cur = route.back();
             return 1;
         } else {
-            cout <<"completed Something";
             // currently on node a == b
 
             // if next edge is full
@@ -87,8 +86,6 @@ int Agent::update(int time) {
                 ttm = 1;
                 return 2;
             }
-
-            cout <<"WOW" <<endl;
 
             b = cur;
             ttm = net -> a[a][b] + K * net -> w[a][b] / net -> c[a][b];

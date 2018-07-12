@@ -14,7 +14,7 @@
 
 using namespace std;
 
-Network::Network(int n, int x, int y): N(n) {
+Network::Network(int n, int x, int y, double P, double Q): N(n), p_reroute(P), p_gas(Q) {
     // generate city positions
     assert(x * y > n && "bounded region should be larger!");
     vector<int> xx, yy;
@@ -26,7 +26,8 @@ Network::Network(int n, int x, int y): N(n) {
     for (int i = 0; i < n; i++)
         for (int j = 0; j < n; j++) {
             // random road length
-            a[i][j] = a[j][i] = (0.5 + (double) rand() / (RAND_MAX)) * hypot(abs(xx[i] - xx[j]), abs(yy[i] - yy[j]));
+            //a[i][j] = a[j][i] = (0.5 + 0.5 * RANDOM_REAL()) * hypot(abs(xx[i] - xx[j]), abs(yy[i] - yy[j]));
+            a[i][j] = a[j][i] = rand() % 100;
             c[i][j] = c[i][j] = max(MIN_CAP, K2 * a[i][j]);
         }
 

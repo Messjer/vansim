@@ -21,6 +21,7 @@ struct WorldConfig {
 class World {
 private:
     std::vector<GossipSession> gossips[MAX_COM_TIME];
+    std::vector<Agent*> garbage[MAX_COM_TIME];
     std::list<Agent*> agents;
     Network *net;
     WorldConfig conf;
@@ -28,10 +29,10 @@ private:
     int num, time;
 
     void reap(Agent *agn);
-    Agent* create();
-    double randReal() {
-        return (double) rand() / (RAND_MAX);
-    }
+    void create();
+
+    double ttl_gos, ttl_norm;
+    int cnt_gos, cnt_norm;
 public:
     World(const WorldConfig &config);
     ~World();

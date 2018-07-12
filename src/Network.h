@@ -11,12 +11,13 @@
 #include <cstdlib>
 
 #define MAX_NODE 10
+#define RANDOM_REAL() ((double) rand() / (RAND_MAX))
 
 class Agent;
 class GossipAgent;
 
 // delay factor
-const double K = 10;
+const double K = 100;
 // capacity factor
 const double K2 = 0.1;
 
@@ -32,15 +33,17 @@ public:
     int c[MAX_NODE][MAX_NODE];
     std::deque<GossipAgent *> agents[MAX_NODE][MAX_NODE];
 
+    double p_reroute, p_gas;
+
     // generate a random network
     // with n vertices and bounded in [0,x], [0,y]
-    Network(int n, int x, int y);
+    Network(int n, int x, int y, double p_reroute, double p_gas);
 };
 
 
 class Agent {
 public:
-    std::vector<int> history;
+    //std::vector<int> history;
 
     // reference to network
     Network *net;
@@ -74,6 +77,11 @@ public:
 
     // dijkstra's algorithm
     void plan();
+
+    // return <type, used_time>, type = 0 normal, type = 1 gossip
+    virtual std::pair<int, double> reap(int time) {
+        return std::make_pair(0, time - born);
+    };
 
     virtual int update(int time);
 };
