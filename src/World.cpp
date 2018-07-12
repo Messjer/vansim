@@ -9,7 +9,7 @@ using namespace std;
 
 World::World(const WorldConfig &config) {
     conf = config;
-    cnt_gos = cnt_norm = 0;
+    msg_exch = cnt_gos = cnt_norm = 0;
     ttl_gos = ttl_norm = 0;
     // assume agents arrival in the first 1/10 of simulation
     // average agent arrival in a step is num
@@ -32,7 +32,7 @@ bool World::step() {
     // check completed gossips
     int cur_T = time % conf.T;
     for (int i = 0; i < gossips[cur_T].size(); i++)
-        gossips[cur_T][i].close();
+        msg_exch += gossips[cur_T][i].close();
     gossips[cur_T].clear();
 
     // recycle complete agents
@@ -119,4 +119,5 @@ void World::printStats() {
     cout <<"Normal Agents :";
     cout <<"Total number : "<<cnt_norm <<endl;
     cout <<"Avg time : " <<ttl_norm / cnt_norm <<endl;
+    //cout <<msg_exch <<endl;
 }

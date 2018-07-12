@@ -27,6 +27,8 @@ private:
     WorldConfig conf;
     int cnt;
     int num, time;
+    // message exchanged
+    int msg_exch;
 
     void reap(Agent *agn);
     void create();

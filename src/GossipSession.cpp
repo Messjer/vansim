@@ -4,11 +4,11 @@
 
 #include "GossipSession.h"
 
-void GossipSession::close() {
+int GossipSession::close() {
     // if gossip aborted
     // due to car leaving edges
     if (a -> cur != cur || b -> cur != cur)
-        return;
+        return 0;
 
     // exchange information
     int N = a -> net -> N;
@@ -22,6 +22,6 @@ void GossipSession::close() {
                 b -> w[i][j] = a -> w[i][j];
             }
     }
-
-
+    // success session
+    return 1;
 }

@@ -13,7 +13,7 @@ class GossipSession {
     int cur;
 public:
     GossipSession(GossipAgent *A, GossipAgent *B, int Cur): a(A), b(B), cur(Cur) {}
-    void close();
+    int close();
 };
 
 
